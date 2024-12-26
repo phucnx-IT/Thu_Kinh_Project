@@ -14,14 +14,14 @@ const dataGlasses = [
 ];
 
 
-const getElementById = (id) => {
+const getEle = (id) => {
     return document.getElementById(id);
 }
 
 let glassesList = new GlassesList();
 
 const showGlassesList = () => {
-    const glassesListDiv = getElementById("vglassesList");
+    const glassesListDiv = getEle("vglassesList");
     dataGlasses.map((glasses) => {
         const glassesItem = new Glasses(glasses.id, glasses.src, glasses.virtualImg, glasses.brand, glasses.name, glasses.color, glasses.price, glasses.description);
         glassesList.addGlasses(glassesItem);
@@ -29,6 +29,42 @@ const showGlassesList = () => {
     glassesListDiv.innerHTML = glassesList.renderGlasses();
 }
 showGlassesList();
+const wareGlasses = (e) =>{
+    let glassesId = e.target.getAttribute("data-id");
+    let glasses = {};
+    for(let value of glassesList.glasses){
+        if(value.id == glassesId){
+            glasses = value;
+        }
+    }
+     showGlassesInfo(glasses);
+}
+const showGlassesInfo = (object) =>{
+    let divAvatar = getEle("avatar");
+    let divGlassesInfo = getEle("glassesInfo");
+    divAvatar.innerHTML = `
+        <img id="glassesId" src="${object.virtualImg}" alt = "${object.name}">
+    `
+    let status = object.status ? "Stocking" : "Sale out";
+    divGlassesInfo.innerHTML = `
+        <h5>${object.name} - ${object.brand} (${object.color})</h5>
+        <p class="card-text">
+            <span class="btn btn-danger btn-sm mr-2">$${object.price}</span>
+            <span class="text-success">${status}</span>
+        </p>
+        <p class="card-text">${object.description}</p>
+    `;
+    divGlassesInfo.style.display = "block";
+}
+
+const removeGlasses = (isDisplay)=>{
+    let glasses = getEle("glassesId");
+    if(glasses){
+        isDisplay ? glasses.style.opacity = 0.9 : glasses.style.opacity = 0;
+    }
+}
+window.wareGlasses = wareGlasses;
+window.removeGlasses = removeGlasses;
   
 
 

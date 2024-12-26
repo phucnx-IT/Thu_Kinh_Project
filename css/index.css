@@ -33,8 +33,9 @@ body{
 
 .vglasses__model img{
     position: absolute;
-    top: 32%;
-    left: 25%;
+    max-width: 250px;
+    top: 31%;
+    left:24%;
     opacity: 0.9;
   
 }
@@ -82,5 +83,8 @@ body{
 }
 .text {
     color:green;
+}
+#vglassesList img{
+    cursor: pointer;
 }
 
